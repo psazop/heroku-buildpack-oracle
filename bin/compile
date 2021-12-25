@@ -12,7 +12,7 @@ BIN_DIR=$(cd "$(dirname "$0")"; pwd) # absolute path
 
 ORACLE_CONFIG="${BUILD_DIR}/.oracle.yml"
 ORACLE_INSTANT_CLIENT_DIR="oracle/oracle_instantclient"
-ORACLE_INSTANT_CLIENT_URL="http://buildpacks.teresa-apps.io/oracle/oracle-instantclient-full-12.1-linux.x64.tar.gz"
+ORACLE_INSTANT_CLIENT_URL="https://github.com/psazop/psazop.github.io/raw/master/oracle-instantclient-full-12.1-linux.x64.tar.gz"
 ORACLE_INSTANT_CLIENT_FILENAME=$(echo $ORACLE_INSTANT_CLIENT_URL | cut -d/ -f5)
 
 source "$BIN_DIR/utils"
@@ -47,6 +47,12 @@ if [[ -s $ORACLE_CONFIG ]]; then
   if [[ -f $BUILD_DIR/$SQLNET_FILENAME ]]; then
     indent "Symlinking ${SQLNET_FILENAME} to ${ORACLE_INSTANT_CLIENT_DIR}/network/admin/sqlnet.ora"
     ln -sf $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
+  fi
+  
+  WALLET_FILENAME=$(grep cwallet.sso $ORACLE_CONFIG | cut -d' ' -f2)
+  if [[ -f $BUILD_DIR/$WALLET_FILENAME ]]; then
+    indent "Symlinking ${WALLET_FILENAME} to ${ORACLE_INSTANT_CLIENT_DIR}/network/admin/cwallet.sso"
+    ln -sf $BUILD_DIR/$WALLET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/cwallet.sso
   fi
 fi
 
