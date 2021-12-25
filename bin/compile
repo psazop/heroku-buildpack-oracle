@@ -40,19 +40,22 @@ if [[ -s $ORACLE_CONFIG ]]; then
   TNSNAMES_FILENAME=$(grep tnsnames.ora $ORACLE_CONFIG | cut -d' ' -f2)
   if [[ -f $BUILD_DIR/$TNSNAMES_FILENAME ]]; then
     indent "Symlinking ${TNSNAMES_FILENAME} to ${ORACLE_INSTANT_CLIENT_DIR}/network/admin/tnsnames.ora"
-    ln -sf $BUILD_DIR/$TNSNAMES_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora
+    # ln -sf $BUILD_DIR/$TNSNAMES_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora
+    cp $BUILD_DIR/$TNSNAMES_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/tnsnames.ora
   fi
 
   SQLNET_FILENAME=$(grep sqlnet.ora $ORACLE_CONFIG | cut -d' ' -f2)
   if [[ -f $BUILD_DIR/$SQLNET_FILENAME ]]; then
     indent "Symlinking ${SQLNET_FILENAME} to ${ORACLE_INSTANT_CLIENT_DIR}/network/admin/sqlnet.ora"
-    ln -sf $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
+    # ln -sf $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
+    cp $BUILD_DIR/$SQLNET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/sqlnet.ora
   fi
   
   WALLET_FILENAME=$(grep cwallet.sso $ORACLE_CONFIG | cut -d' ' -f2)
   if [[ -f $BUILD_DIR/$WALLET_FILENAME ]]; then
     indent "Symlinking ${WALLET_FILENAME} to ${ORACLE_INSTANT_CLIENT_DIR}/network/admin/cwallet.sso"
-    ln -sf $BUILD_DIR/$WALLET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/cwallet.sso
+    # ln -sf $BUILD_DIR/$WALLET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/cwallet.sso
+    cp $BUILD_DIR/$WALLET_FILENAME ${ORACLE_NETWORK_ADMIN_DIR}/cwallet.sso
   fi
 fi
 
